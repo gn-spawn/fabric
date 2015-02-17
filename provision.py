@@ -13,6 +13,7 @@ def execute():
     mariadb()
     mysql_decure()
     python3()
+    print u'おわりました(`>ω<\')'
 
 def update():
     sudo('yum update -y')
@@ -21,13 +22,13 @@ def update():
 def rbenv_install():
     run('git clone https://github.com/sstephenson/rbenv /home/vagrant/.rbenv')
     run('git clone https://github.com/sstephenson/ruby-build /home/vagrant/.rbenv/plugins/ruby-build')
-    sudo('echo \'export PATH="$HOME/.rbenv/bin:$PATH"\' >> /home/vagrant/.bash_profile')
-    sudo('echo \'eval "$(rbenv init -)"\' >> /home/vagrant/.bash_profile')
+    run('echo \'export PATH="$HOME/.rbenv/bin:$PATH"\' >> /home/vagrant/.bash_profile')
+    run('echo \'eval "$(rbenv init -)"\' >> /home/vagrant/.bash_profile')
 
 def ruby_and_rails_install():
-    sudo('rbenv install 2.2.0')
-    sudo('rbenv global 2.2.0')
-    sudo('gem install rails bundler --no-ri --no-rdoc')
+    run('rbenv install 2.2.0')
+    run('rbenv global 2.2.0')
+    run('gem install rails bundler --no-ri --no-rdoc')
 
 def all_port_open():
     sudo('firewall-cmd --set-default-zone=trusted')
@@ -43,8 +44,8 @@ def mariadb():
     sudo('systemctl enable mariadb')
     sudo('systemctl start mariadb')
 
-def mysql_decure():
-    sudo('mysql -uroot -e "UPDATE mysql.user SET Password=PASSWORD(\'root\') WHERE User=\'root\'; DELETE FROM mysql.user WHERE User=''; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); FLUSH PRIVILEGES; "')
+def mysql_secure():
+    sudo('mysql -uroot -e "UPDATE mysql.user SET Password=PASSWORD(\'root\') WHERE User=\'root\'; DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); FLUSH PRIVILEGES; "')
 
 
 def python3():
